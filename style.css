@@ -119,16 +119,17 @@ footer {
 
 .hero-title {
   opacity: 0;
-  transform: translateY(80px);
-  animation: heroFadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform: translateY(24px);
+  animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .hero-subtitle {
   opacity: 0;
-  transform: translateY(60px);
-  animation: heroFadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: 0.6s;
+  transform: translateY(16px);
+  animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 0.25s;
 }
+
 
 
 
