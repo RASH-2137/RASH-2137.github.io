@@ -98,5 +98,26 @@
   <p>Email: 2137rahulsharma@gmail.com</p>
   <p>GitHub: <a href="https://github.com/RASH-2137" target="_blank">RASH-2137</a> </p>
 </section>
+
+<script>
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  document.querySelectorAll(".reveal").forEach(el => {
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
+
+  
 </body>
 </html>
