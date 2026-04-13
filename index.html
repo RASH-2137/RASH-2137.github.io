@@ -1,166 +1,523 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Rahul Sharma | Applied AI & Software Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:ital,wght@0,400;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080c12;
+  --surface:#0e1420;
+  --line:#1e2a3a;
+  --accent:#00d4ff;
+  --accent2:#7c6fff;
+  --text:#e8edf5;
+  --muted:#6b7c94;
+  --warm:#f5a623;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
 
-  <title>Rahul Sharma | Applied AI & Software Engineering</title>
-  <p class="hero-tagline">
-  Building applied AI systems that solve real-world problems
-  through NLP, computer vision, and intelligent software design.
-  </p>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:999;opacity:.4
+}
+body::after{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,.012) 2px,rgba(0,212,255,.012) 4px);
+  pointer-events:none;z-index:998
+}
 
-  <link rel="stylesheet" href="style.css">
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:20px 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid transparent;
+  transition:border-color .3s,background .3s;
+}
+nav.scrolled{
+  background:rgba(8,12,18,.85);
+  border-color:var(--line);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.nav-logo{
+  font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:.05em;
+}
+.nav-links{display:flex;gap:32px}
+.nav-links a{
+  color:var(--muted);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;transition:color .2s;font-weight:500;
+}
+.nav-links a:hover{color:var(--accent)}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:120px 0 80px;
+  position:relative;
+}
+.hero-eyebrow{
+  font-family:'DM Mono',monospace;font-size:.8rem;
+  color:var(--accent);letter-spacing:.15em;text-transform:uppercase;
+  margin-bottom:24px;opacity:0;animation:fadeUp .6s .2s forwards;
+  display:flex;align-items:center;gap:12px;
+}
+.hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--accent)}
+.hero-name{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(3.2rem,8vw,7rem);
+  line-height:.95;letter-spacing:-.03em;
+  opacity:0;animation:fadeUp .7s .35s forwards;
+}
+.hero-name .line2{
+  display:block;
+  background:linear-gradient(90deg,var(--accent) 0%,var(--accent2) 60%,var(--warm) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-desc{
+  margin-top:32px;max-width:520px;
+  font-size:1.05rem;color:var(--muted);line-height:1.8;
+  opacity:0;animation:fadeUp .7s .5s forwards;
+}
+.hero-desc strong{color:var(--text)}
+.hero-links{
+  margin-top:40px;display:flex;gap:16px;flex-wrap:wrap;
+  opacity:0;animation:fadeUp .7s .65s forwards;
+}
+.btn{
+  padding:12px 28px;border-radius:4px;font-size:.85rem;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;
+  transition:all .2s;display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+}
+.btn-primary{background:var(--accent);color:var(--bg);border:1px solid var(--accent)}
+.btn-primary:hover{background:transparent;color:var(--accent);box-shadow:0 0 20px rgba(0,212,255,.25)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--muted);color:var(--accent)}
+
+.hero-grid{
+  position:absolute;right:-80px;top:50%;transform:translateY(-50%);
+  width:420px;height:420px;opacity:.07;pointer-events:none;
+}
+
+/* SECTIONS */
+section{padding:100px 0;border-top:1px solid var(--line)}
+.section-label{
+  font-family:'DM Mono',monospace;font-size:.75rem;
+  color:var(--accent);letter-spacing:.18em;text-transform:uppercase;
+  margin-bottom:16px;display:flex;align-items:center;gap:10px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--line);max-width:80px}
+.section-title{
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:clamp(2rem,4vw,2.8rem);
+  line-height:1.1;margin-bottom:56px;letter-spacing:-.02em;
+}
+
+/* ABOUT */
+.about-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-text p{color:var(--muted);font-size:1.05rem;margin-bottom:16px;line-height:1.85}
+.about-text p strong{color:var(--text)}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.stat-box{
+  background:var(--surface);padding:28px 24px;
+  border:1px solid var(--line);transition:border-color .3s;
+}
+.stat-box:hover{border-color:var(--accent)}
+.stat-num{
+  font-family:'Syne',sans-serif;font-weight:800;font-size:2.2rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat-label{font-size:.8rem;color:var(--muted);margin-top:4px;letter-spacing:.06em;text-transform:uppercase}
+
+/* SKILLS */
+.skills-layout{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.skill-card{
+  background:var(--surface);padding:32px 28px;
+  border:1px solid var(--line);
+  position:relative;overflow:hidden;transition:border-color .3s,transform .3s;
+}
+.skill-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transform:scaleX(0);transform-origin:left;transition:transform .4s;
+}
+.skill-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.skill-card:hover::before{transform:scaleX(1)}
+.skill-icon{
+  font-size:1.4rem;margin-bottom:20px;
+  width:44px;height:44px;border-radius:4px;
+  background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);
+  display:flex;align-items:center;justify-content:center;
+}
+.skill-title{
+  font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;
+  margin-bottom:16px;color:var(--text);
+}
+.skill-tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{
+  padding:5px 12px;border:1px solid var(--line);border-radius:2px;
+  font-size:.75rem;color:var(--muted);letter-spacing:.04em;
+  font-family:'DM Mono',monospace;transition:all .2s;
+}
+.tag:hover{border-color:var(--accent);color:var(--accent)}
+
+/* PROJECTS */
+.projects-grid{display:flex;flex-direction:column;gap:2px}
+.project-card{
+  background:var(--surface);padding:40px;
+  border:1px solid var(--line);
+  display:grid;grid-template-columns:1fr auto;gap:32px;
+  align-items:start;
+  transition:border-color .3s,background .3s;
+  position:relative;overflow:hidden;
+}
+.project-card::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--accent),var(--accent2));
+  transform:scaleY(0);transform-origin:top;transition:transform .4s;
+}
+.project-card:hover{border-color:rgba(0,212,255,.3);background:rgba(14,20,32,.8)}
+.project-card:hover::after{transform:scaleY(1)}
+.project-num{
+  font-family:'DM Mono',monospace;font-size:.7rem;
+  color:var(--accent);margin-bottom:12px;letter-spacing:.1em;
+}
+.project-title{
+  font-family:'Syne',sans-serif;font-weight:700;font-size:1.25rem;
+  margin-bottom:8px;line-height:1.3;
+}
+.project-meta{
+  font-family:'DM Mono',monospace;font-size:.75rem;
+  color:var(--accent2);margin-bottom:14px;letter-spacing:.06em;
+}
+.project-desc{color:var(--muted);font-size:.95rem;line-height:1.75;max-width:560px}
+.project-actions{display:flex;flex-direction:column;gap:10px;align-items:flex-end;min-width:120px}
+.project-link{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:9px 18px;border:1px solid var(--line);border-radius:3px;
+  font-size:.78rem;font-family:'DM Mono',monospace;color:var(--muted);
+  text-decoration:none;letter-spacing:.06em;transition:all .2s;white-space:nowrap;
+}
+.project-link:hover{border-color:var(--accent);color:var(--accent)}
+.badge{
+  display:inline-block;padding:4px 10px;
+  background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);
+  border-radius:2px;font-size:.7rem;color:var(--accent);
+  font-family:'DM Mono',monospace;letter-spacing:.08em;
+}
+
+/* ACHIEVEMENTS */
+.ach-list{display:flex;flex-direction:column;gap:2px}
+.ach-item{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:28px 32px;background:var(--surface);border:1px solid var(--line);
+  transition:border-color .3s;
+}
+.ach-item:hover{border-color:rgba(124,111,255,.4)}
+.ach-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--accent2);margin-top:8px;flex-shrink:0;
+}
+.ach-text{color:var(--muted);font-size:.95rem;line-height:1.7}
+.ach-text strong{color:var(--text);font-weight:500}
+
+/* FOOTER */
+footer{
+  padding:60px 0;border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;
+}
+.footer-left{font-family:'DM Mono',monospace;font-size:.8rem;color:var(--muted)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:var(--muted);font-size:.85rem;text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--accent)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* CURSOR */
+.cursor-dot{
+  position:fixed;width:8px;height:8px;border-radius:50%;
+  background:var(--accent);pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);mix-blend-mode:difference;
+}
+.cursor-ring{
+  position:fixed;width:32px;height:32px;border-radius:50%;
+  border:1px solid rgba(0,212,255,.5);pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+}
+
+/* RESPONSIVE */
+@media(max-width:800px){
+  .about-layout{grid-template-columns:1fr}
+  .skills-layout{grid-template-columns:1fr}
+  .project-card{grid-template-columns:1fr;gap:20px}
+  .project-actions{align-items:flex-start}
+  nav .nav-links{display:none}
+  .hero-grid{display:none}
+  .wrap{padding:0 20px}
+}
+</style>
 </head>
 <body>
 
-  <main class="container">
+<div class="cursor-dot" id="dot"></div>
+<div class="cursor-ring" id="ring"></div>
 
-    <!-- HERO -->
-    <header class="hero">
-      <h1>Rahul Sharma</h1>
-      <p class="subtitle">
-        Applied AI & Software Engineering · Python · Machine Learning · NLP
-      </p>
+<nav id="nav">
+  <div class="nav-logo">RS</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#achievements">Awards</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
 
-      <div class="links">
-        <a href="https://github.com/RASH-2137" target="_blank">GitHub</a>
-        <a href="https://www.kaggle.com/rahulsharma2137" target="_blank">Kaggle</a>
-        <a href="mailto:2137rahulsharma@gmail.com">Email</a>
+<main class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <svg class="hero-grid" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="400" height="400" fill="url(#grid)"/>
+      <circle cx="200" cy="200" r="120" stroke="white" stroke-width="0.5" fill="none"/>
+      <circle cx="200" cy="200" r="60" stroke="white" stroke-width="0.5" fill="none"/>
+      <line x1="80" y1="200" x2="320" y2="200" stroke="white" stroke-width="0.5"/>
+      <line x1="200" y1="80" x2="200" y2="320" stroke="white" stroke-width="0.5"/>
+    </svg>
+
+    <div class="hero-eyebrow">Applied AI &amp; Software Engineering</div>
+    <h1 class="hero-name">
+      Rahul<br>
+      <span class="line2">Sharma.</span>
+    </h1>
+    <p class="hero-desc">
+      CS undergraduate building <strong>applied AI systems</strong> — focused on correctness,
+      interpretability, and real-world impact. Exploring ML, NLP, and how algorithms shape human behavior.
+    </p>
+    <div class="hero-links">
+      <a class="btn btn-primary" href="https://github.com/RASH-2137" target="_blank">↗ GitHub</a>
+      <a class="btn btn-ghost" href="https://www.kaggle.com/rahulsharma2137" target="_blank">Kaggle</a>
+      <a class="btn btn-ghost" href="mailto:2137rahulsharma@gmail.com">Email me</a>
+      <a class="btn btn-ghost" href="Rahul_Sharma_Google_Resume_Final.pdf" target="_blank">Resume ↓</a>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">01 — About</div>
+    <div class="about-layout">
+      <div class="about-text reveal">
+        <p>I'm a <strong>Computer Science undergraduate</strong> at the intersection of applied machine learning, natural language processing, and systems thinking.</p>
+        <p>My work focuses on building AI that is <strong>correct, interpretable, and impactful</strong> — not just technically impressive. I'm particularly drawn to understanding how algorithmic systems influence information flow and human behavior.</p>
+        <p>When I'm not building, I'm competing at hackathons, researching AI ethics, or contributing to open-source projects.</p>
       </div>
-    </header>
-
-    <!-- ABOUT -->
-    <section>
-      <h2>About</h2>
-      <p>
-        I am a Computer Science undergraduate focused on building and analyzing
-        <strong>applied AI systems</strong> with an emphasis on correctness,
-        interpretability, and real-world impact.
-      </p>
-      <p>
-        My interests lie at the intersection of applied machine learning,
-        natural language processing, and system-level experimentation,
-        particularly in understanding how algorithmic systems influence
-        information flow and human behavior.
-      </p>
-    </section>
-
-    <!-- SKILLS -->
-    <section>
-      <h2>Skills</h2>
-
-      <div class="grid">
-        <div>
-          <h3>Programming & Data</h3>
-          <ul>
-            <li>Python</li>
-            <li>Pandas, NumPy</li>
-            <li>Data Analysis & Visualization</li>
-          </ul>
+      <div class="stat-grid reveal">
+        <div class="stat-box">
+          <div class="stat-num">3+</div>
+          <div class="stat-label">AI Projects</div>
         </div>
-
-        <div>
-          <h3>Applied Machine Learning</h3>
-          <ul>
-            <li>Supervised & Unsupervised Learning</li>
-            <li>Model Evaluation</li>
-            <li>Feature Engineering</li>
-            <li>Basic NLP Pipelines</li>
-          </ul>
+        <div class="stat-box">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Certifications</div>
         </div>
-
-        <div>
-          <h3>Systems & Tools</h3>
-          <ul>
-            <li>Linux (CLI)</li>
-            <li>Git & GitHub</li>
-            <li>AI-assisted development workflows</li>
-          </ul>
+        <div class="stat-box">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Hackathon Wins</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Live Demos</div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- PROJECTS -->
-    <section>
-      <h2>Projects</h2>
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">02 — Skills</div>
+    <h2 class="section-title">What I work with</h2>
+    <div class="skills-layout reveal">
+      <div class="skill-card">
+        <div class="skill-icon">⌨</div>
+        <div class="skill-title">Programming & Data</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Pandas</span>
+          <span class="tag">NumPy</span>
+          <span class="tag">Data Analysis</span>
+          <span class="tag">Visualization</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⚡</div>
+        <div class="skill-title">Applied ML</div>
+        <div class="skill-tags">
+          <span class="tag">Supervised Learning</span>
+          <span class="tag">Unsupervised</span>
+          <span class="tag">Model Evaluation</span>
+          <span class="tag">Feature Engineering</span>
+          <span class="tag">NLP Pipelines</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⚙</div>
+        <div class="skill-title">Systems & Tools</div>
+        <div class="skill-tags">
+          <span class="tag">Linux CLI</span>
+          <span class="tag">Git</span>
+          <span class="tag">GitHub</span>
+          <span class="tag">Streamlit</span>
+          <span class="tag">LLMs</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <div class="project">
-        <h3>Applied Thermal–Optical Image Enhancement System || (ongoing)</h3>
-        <p class="meta">Computer Vision · Applied Machine Learning · Python</p>
-        <p>
-          Built an applied computer vision system to enhance low-resolution
-          thermal images using aligned optical (RGB) references. Explored
-          image fusion and super-resolution pipelines while evaluating
-          trade-offs between perceptual clarity and thermal fidelity in
-          real-world, multimodal data.
-        </p>
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">03 — Projects</div>
+    <h2 class="section-title">Selected work</h2>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div>
+          <div class="project-num">001</div>
+          <h3 class="project-title">Applied Thermal–Optical Image Enhancement System</h3>
+          <div class="project-meta">Computer Vision · Applied ML · Python</div>
+          <p class="project-desc">Built a CV system to enhance low-resolution thermal images using aligned optical (RGB) references. Explored image fusion and super-resolution pipelines while evaluating trade-offs between perceptual clarity and thermal fidelity in real-world multimodal data.</p>
+        </div>
+        <div class="project-actions">
+          <span class="badge">Ongoing</span>
+        </div>
       </div>
 
-      <div class="project">
-        <h3>AI Behavioral Pattern Analysis Bot</p><a href="https://chat-behavior-insight-system-3pwzbandetpafct9zl9sjx.streamlit.app/" target="_blank"> || Live Demo</a>
-        </h3>
-        <p class="meta">Applied NLP · LLMs · Python</p>
-        <p>
-          Developed an applied NLP system to extract behavioral signals such as
-          engagement and sentiment trends from conversational data. Used
-          language-processing techniques and LLM-based reasoning to generate
-          human-centric insights while balancing interpretability and reliability.
-        </p>
+      <div class="project-card reveal">
+        <div>
+          <div class="project-num">002</div>
+          <h3 class="project-title">AI Behavioral Pattern Analysis Bot</h3>
+          <div class="project-meta">Applied NLP · LLMs · Python</div>
+          <p class="project-desc">NLP system extracting behavioral signals — engagement, sentiment trends — from conversational data. Uses LLM-based reasoning to generate human-centric insights while balancing interpretability and reliability.</p>
+        </div>
+        <div class="project-actions">
+          <a class="project-link" href="https://chat-behavior-insight-system-3pwzbandetpafct9zl9sjx.streamlit.app/" target="_blank">↗ Live Demo</a>
+        </div>
       </div>
 
-      <div class="project">
-          <h3>WhatsApp Chat Analyzer</p><a href="https://wp-chat-analyzer1.streamlit.app/" target="_blank"> || Live Demo</a>
-          </h3>
-          <p class="meta">Python · NLP · Data Analysis · Streamlit</p>
-          <p>
-            Built an interactive WhatsApp chat analysis system that extracts meaningful
-            insights from exported chat data, including message frequency, user activity,
-            word trends, emoji usage, and engagement patterns. Designed with Streamlit
-            for a clean user interface and real-time visualization of conversational
-            statistics and behavioral trends.
-          </p>
+      <div class="project-card reveal">
+        <div>
+          <div class="project-num">003</div>
+          <h3 class="project-title">WhatsApp Chat Analyzer</h3>
+          <div class="project-meta">Python · NLP · Data Analysis · Streamlit</div>
+          <p class="project-desc">Interactive analysis system extracting insights from exported chat data — message frequency, user activity, word trends, emoji usage, and engagement patterns. Built with Streamlit for real-time visualization of conversational statistics.</p>
+        </div>
+        <div class="project-actions">
+          <a class="project-link" href="https://wp-chat-analyzer1.streamlit.app/" target="_blank">↗ Live Demo</a>
+        </div>
       </div>
-      
-      <div class="project">
-        <h3>Study on Algorithmic Recommendation & Information Spread</h3>
-        <p class="meta">Analytical Research · Ethics & AI Systems</p>
-        <p>
-          Analytical research examining how recommendation mechanisms can amplify
-          content visibility during high-sensitivity events. Focused on risks,
-          limitations, and ethical concerns associated with AI-driven information
-          distribution rather than deploying production systems.
-        </p>
-        <a href="https://drive.google.com/file/d/1tCfiH4f20M8O0yQwzZvbrvdPAlWqoA3t/view" target="_blank">
-          View Research Paper
-        </a>
+
+      <div class="project-card reveal">
+        <div>
+          <div class="project-num">004</div>
+          <h3 class="project-title">Algorithmic Recommendation & Information Spread</h3>
+          <div class="project-meta">Analytical Research · Ethics & AI Systems</div>
+          <p class="project-desc">Research examining how recommendation mechanisms amplify content visibility during high-sensitivity events. Focused on risks, limitations, and ethical concerns of AI-driven information distribution.</p>
+        </div>
+        <div class="project-actions">
+          <a class="project-link" href="https://drive.google.com/file/d/1tCfiH4f20M8O0yQwzZvbrvdPAlWqoA3t/view" target="_blank">↗ Research Paper</a>
+        </div>
       </div>
-    </section>
 
-    <!-- ACHIEVEMENTS -->
-    <section>
-      <h2>Achievements & Learning</h2>
-      <ul>
-        <li>Winner / Top Performer in national-level hackathons (TechBlitz Kronos, HackSagon IITM, Innovation Showcase).</li>
-        <li>Kaggle certifications in Python, Pandas, Data Visualization, and Machine Learning.</li>
-        <li>Participant in Google Cloud Summer School and Google Arcade Program.</li>
-      </ul>
-    </section>
+    </div>
+  </section>
 
-    <!-- FOOTER -->
-    <footer>
-      <p>
-        Resume:
-        <a href="Rahul_Sharma_Google_Resume_Final.pdf" target="_blank">
-          Download PDF
-        </a>
-      </p>
-    </footer>
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements">
+    <div class="section-label">04 — Recognition</div>
+    <h2 class="section-title">Achievements & learning</h2>
+    <div class="ach-list reveal">
+      <div class="ach-item">
+        <div class="ach-dot"></div>
+        <p class="ach-text"><strong>Winner / Top Performer</strong> in national-level hackathons — TechBlitz Kronos, HackSagon IITM, and Innovation Showcase.</p>
+      </div>
+      <div class="ach-item">
+        <div class="ach-dot"></div>
+        <p class="ach-text"><strong>Kaggle Certifications</strong> in Python, Pandas, Data Visualization, and Machine Learning.</p>
+      </div>
+      <div class="ach-item">
+        <div class="ach-dot"></div>
+        <p class="ach-text">Participant in <strong>Google Cloud Summer School</strong> and <strong>Google Arcade Program</strong>.</p>
+      </div>
+    </div>
+  </section>
 
-  </main>
+</main>
+
+<!-- FOOTER -->
+<footer id="contact" class="wrap">
+  <div class="footer-left">© 2025 Rahul Sharma — Built with purpose.</div>
+  <div class="footer-links">
+    <a href="https://github.com/RASH-2137" target="_blank">GitHub</a>
+    <a href="https://www.kaggle.com/rahulsharma2137" target="_blank">Kaggle</a>
+    <a href="mailto:2137rahulsharma@gmail.com">Email</a>
+    <a href="Rahul_Sharma_Google_Resume_Final.pdf" target="_blank">Resume</a>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(r => observer.observe(r));
+
+const dot = document.getElementById('dot');
+const ring = document.getElementById('ring');
+let rx = 0, ry = 0, mx = 0, my = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx + 'px';
+  dot.style.top = my + 'px';
+});
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+</script>
 
 </body>
 </html>
