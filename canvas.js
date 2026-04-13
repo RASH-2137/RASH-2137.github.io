@@ -11,9 +11,9 @@
   const ctx     = canvas.getContext('2d');
 
   let W, H, particles, mouse, animId;
-  const PARTICLE_COUNT = 90;
-  const CONNECTION_DIST = 140;
-  const MOUSE_REPEL = 120;
+   const PARTICLE_COUNT = 180;
+   const CONNECTION_DIST = 200;
+   const MOUSE_REPEL = 170;
 
   mouse = { x: -9999, y: -9999 };
 
