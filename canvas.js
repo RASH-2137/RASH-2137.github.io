@@ -230,7 +230,7 @@
     mouse.y = e.clientY - rect.top;
   });
 
-  canvas.addEventListener('click', e => {
+  document.getElementById('hero').addEventListener('click', e => {
     const rect = canvas.getBoundingClientRect();
     const cx   = e.clientX - rect.left;
     const cy   = e.clientY - rect.top;
@@ -239,7 +239,7 @@
     attractPoint = { x: cx, y: cy, ttl: 48 };
   });
 
-  canvas.addEventListener('touchstart', e => {
+  document.getElementById('hero').addEventListener('touchstart', e => {
     const rect  = canvas.getBoundingClientRect();
     const touch = e.touches[0];
     const cx    = touch.clientX - rect.left;
